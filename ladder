@@ -1,0 +1,145 @@
+-- Args --
+
+tArgs = {...}
+length = tArgs[2]
+turtle.select(1)
+ladders = 0
+blocks = 0
+torches = 0
+currentLadderSlot = 1
+currentBlockSlot = 5
+currentTorcheSlot = 9
+
+-- Functions --
+
+dig = function()
+ if tArgs[1] == "up" then
+  turtle.digUp()
+  turtle.Up()
+ end
+ elseif tArgs[1] == "down" then
+  turtle.digDown()
+  turtle.down()
+ end
+end
+
+place = function(material)
+ if material == "ladder" then
+  turtle.select(currentLadderSlot)
+  if tArgs[1] == "up" then
+   turtle.placeDown()
+  elseif tArgs[1] == "down" then
+   turtle.placeUp()
+  end
+  updateSlot("ladders")
+ elseif material == "block" then
+  turtle.select(currentBlockSlot)
+  turtle.place()
+  updateSlot("blocks")
+ elseif material == "torch" then
+  turtle.turnRight()
+  turtle.turnRight()
+  turtle.dig()
+  turtle.forward()
+  if not turtle.detect() then
+   place("block")
+  end
+  turtle.back()
+  turtle.select(currentTorchSlot)
+  turtle.place()
+  turtle.turnRight()
+  turtle.turnRight()
+  updateSlot("torches")
+ end
+end
+
+countMaterials = function()
+ for i = 1,4 do
+  ladders = ladders + turtle.getItemCount(i)
+ end
+ for i = 5,8 do
+  blocks = blocks + turtle.getItemCount(i)
+ end
+ for i = 9,12 do
+  torches = torches + turtle.getItemCount(i)
+ end
+end
+
+updateSlot = function(material)
+ if material == "ladders" then
+  for i = 1,4 do
+   if turtle.getItemCount(i) > 0 then
+    currentLadderSlot = i
+    break
+   end
+  end
+ elseif material == "blocks" then
+  for i = 5,8 do
+   if turtle.getItemCount(i) > 0 then
+    currentBlockSlot = i
+    break
+   end
+  end
+ elseif material == "torches" then
+  for i = 9,12 do
+   if turtle.getItemCount(i) > 0 then
+    currentTorchSlot = i
+    break
+   end
+  end
+ end
+end
+
+placeLadder = function()
+ turtle.select(currentLadderSlot)
+ place()
+ updateSlot("ladders")
+end
+
+placeBlock = function()
+ turtle
+
+-- Check conditions --
+
+if turtle.getFuelLevel() < tArgs[2]*1,5 then
+ print("Not enough fuel")
+ error()
+end
+
+while true do
+ term.clear()
+ countMaterials()
+ additionalLaddersNeeded = tArgs[2] - ladders
+ additionalBlocksNeeded = tArgs[2] - blocks
+ additionalTorchesNeeded = tArgs[2]/4 - torches
+ if additionalLaddersNeeded + additionalBlocksNeeded + additionalTorchesNeeded > 0 then
+  print("Materials needed: ")
+  print("Ladders (slot 1 to 4): "..additionalLaddersNeeded)
+  print("Blocks (slot 5 to 8): "..additionalBlocksNeeded)
+  print("Torches (slot 9 to 12): "..additionalTorchesNeeded)
+  os.pullEvent("turtle_inventory")
+ else
+  break
+ end
+end
+
+-- Main --
+
+dig()
+for i = 1,length do
+ if not turtle.detect() then
+  place("block")
+ end
+ dig()
+ place("ladder")
+ if i%4 == 0 then
+  place("torch")
+ end
+ for i = 5,8 do
+  blocks = blocks + turtle.getItemCount(i)
+ end
+ if blocks == 0 then
+  print("Out of blocks!")
+  error()
+ end
+end
