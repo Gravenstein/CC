@@ -1,0 +1,89 @@
+-- Args -- 
+
+
+tArgs = {...}
+i = 0
+h = 2
+
+length = tArgs[1]
+
+l = 1
+tn = length/10 + 1
+fn = length*2 + 1
+
+
+-- Functions --
+
+
+
+mf = function()
+
+ turtle.dig()
+
+ turtle.forward()
+
+ turtle.digDown()
+
+end
+
+
+
+-- Check conditions --
+
+
+
+if turtle.getItemCount(1) < tn then
+
+ print("Not enough torches")
+
+ error()
+
+end
+
+
+
+if turtle.getFuelLevel() < fn then
+
+ print("Not enough fuel")
+
+ error()
+
+end
+
+
+
+-- Main --
+
+
+
+turtle.select(1)
+
+for l = 1,length do
+
+ mf()
+
+ if l%10 == 0 then
+
+  turtle.placeDown()
+
+ end
+
+end
+
+if length%10 < 5 then
+ turtle.placeDown()
+
+end
+
+turtle.turnRight()
+
+turtle.turnRight()
+
+for l = 2,length do
+
+ turtle.forward()
+
+end
+
+turtle.down()
+print("Branch complete")
