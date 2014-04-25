@@ -1,5 +1,5 @@
 i = 1
-programs = ["branchmine","floor","flat","cd"]
+programs = {"branchmine","floor","flat","cd"}
 while programs[i] do
  shell.run("download",programs[i])
  i = i + 1
