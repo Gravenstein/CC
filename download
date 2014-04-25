@@ -1,2 +1,2 @@
 print("Success!")
-print("You haven't defeated the Kraken!")
+print("You defeated the Kraken!")
