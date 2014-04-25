@@ -1,0 +1,48 @@
+-- Args --
+
+i = 0
+h = 2
+
+-- Functions --
+
+du = function()
+ turtle.digUp()
+ turtle.up()
+end
+
+dd = function()
+ turtle.digDown()
+ turtle.down()
+end
+
+df = function()
+ turtle.digForward()
+ turtle.forward()
+end
+
+-- Main --
+
+while true do
+
+if turtle.detectForward() == true then
+ df()
+ for i = 1,2 do
+  turtle.digDown()
+  repeat
+   du()
+   h = h + 1
+  until turtle.detectUp() == false
+  df()
+  repeat
+   dd()
+   h = h - 1
+  until h == 2
+  turtle.turnRight()
+  df()
+  turtle.turnRight()
+ end
+ turtle.back()
+end
+
+end
+ 

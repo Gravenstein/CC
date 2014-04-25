@@ -1,0 +1,98 @@
+-- Args --
+
+tArgs = {...}
+length = tArgs[1]
+width = tArgs[2]
+slotSelected = 1
+supplies = 0
+for i = 1, 16 do
+ supplies = supplies + turtle.getItemCount(i)
+end
+suppliesNeeded = width * length
+fuelNeeded = width * length + width - 2
+even = function(x)
+ if x%2 == 0 then
+  return true
+ else
+  return false
+ end
+end
+if not even(width) then
+ fuelNeeded = fuelNeeded + length - 1
+end
+
+-- Check conditions --
+
+checkTotalSupplies = function()
+ print("Number of materials needed: " .. suppliesNeeded)
+ if supplies < suppliesNeeded then
+  print("Not enough materials")
+  error()
+ end
+end
+
+checkTotalFuel = function()
+ print("Approx. fuel needed: " .. fuelNeeded)
+ if turtle.getFuelLevel() < fuelNeeded then
+  print("Not enough fuel")
+  error()
+ end
+end
+
+
+-- Functions --
+
+checkSupplies = function()
+ if turtle.getItemCount(slotSelected) == 0 then
+  slotSelected = slotSelected + 1
+  turtle.select(slotSelected)
+ end
+end
+
+row = function()
+ for l = 1, length do
+  turtle.digDown()
+  turtle.placeDown()
+  checkSupplies()
+  if l < tonumber(length) then
+   turtle.forward()
+  end
+ end
+end
+
+-- Main --
+
+checkTotalSupplies()
+checkTotalFuel()
+turtle.select(slotSelected)
+
+for w = 1, width do
+ row()
+ if w < tonumber(width) then
+  if even(w) then
+   turtle.turnLeft()
+   turtle.forward()
+   turtle.turnLeft()
+  else
+   turtle.turnRight()
+   turtle.forward()
+   turtle.turnRight()
+  end
+ end
+end
+if not even(width) then
+ turtle.turnRight()
+ turtle.turnRight()
+ for l = 1, length do
+  if l < tonumber(length) then
+   turtle.forward()
+  end
+ end
+end
+turtle.turnRight()
+for w = 1, width do
+ if w < tonumber(width) then
+  turtle.forward()
+ end
+end
+turtle.turnRight()

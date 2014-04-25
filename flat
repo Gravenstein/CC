@@ -1,0 +1,99 @@
+-- Args --
+
+tArgs = {...}
+length = tonumber(tArgs[1])
+width = tonumber(tArgs[2])
+safety = tonumber(tArgs[3]) or 10
+s = 0
+h = 1
+even = function(x)
+ if x%2 == 0 then
+  return true
+ else
+  return false
+ end
+end
+
+-- Functions --
+
+dig = function(direction)
+ if direction == "up" then
+  while turtle.detectUp() do
+   turtle.digUp()
+   sleep(0.5)
+  end
+ elseif direction == nil then
+  while turtle.detect() do
+   turtle.dig()
+   sleep(0.5)
+  end
+ else
+  print("Error: Invalid direction")
+  error()
+ end
+ sleep(0.1)
+ direction = nil
+end
+
+column = function()
+ while turtle.detectUp() or s < safety do
+  if turtle.detectUp() then
+   s = 0
+  else
+   s = s + 1
+  end
+  dig("up")
+  turtle.up()
+  h = h + 1
+ end
+ while h > 1 do
+  turtle.down()
+  h = h - 1
+ end
+ s = 0
+end
+
+row = function()
+ for l = 1, length do
+  column()
+  if l < tonumber(length) then
+   dig()
+   turtle.forward()
+  end
+ end
+end
+
+-- Main --
+
+for w = 1, width do
+ row()
+ if w < tonumber(width) then
+  if even(w) then
+   turtle.turnLeft()
+   dig()
+   turtle.forward()
+   turtle.turnLeft()
+  else
+   turtle.turnRight()
+   dig()
+   turtle.forward()
+   turtle.turnRight()
+  end
+ end
+end
+
+if not even(width) then
+ turtle.turnRight()
+ turtle.turnRight()
+ for l = 1, length do
+  if l < tonumber(length) then
+   turtle.forward()
+  end
+ end
+end
+turtle.turnRight()
+for w = 1, width do
+ if w < tonumber(width) then
+  turtle.forward()
+ endend
+turtle.turnRight()
