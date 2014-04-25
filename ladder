@@ -16,7 +16,6 @@ dig = function()
  if tArgs[1] == "up" then
   turtle.digUp()
   turtle.Up()
- end
  elseif tArgs[1] == "down" then
   turtle.digDown()
   turtle.down()
@@ -37,8 +36,7 @@ place = function(material)
   turtle.place()
   updateSlot("blocks")
  elseif material == "torch" then
-  turtle.turnRight()
-  turtle.turnRight()
+  turtle.turnLeft()
   turtle.dig()
   turtle.forward()
   if not turtle.detect() then
@@ -48,12 +46,14 @@ place = function(material)
   turtle.select(currentTorchSlot)
   turtle.place()
   turtle.turnRight()
-  turtle.turnRight()
   updateSlot("torches")
  end
 end
 
 countMaterials = function()
+ ladders = 0
+ blocks = 0
+ torches = 0
  for i = 1,4 do
   ladders = ladders + turtle.getItemCount(i)
  end
@@ -90,28 +90,14 @@ updateSlot = function(material)
  end
 end
 
-placeLadder = function()
- turtle.select(currentLadderSlot)
- place()
- updateSlot("ladders")
-end
-
-placeBlock = function()
- turtle
-
 -- Check conditions --
-
-if turtle.getFuelLevel() < tArgs[2]*1,5 then
- print("Not enough fuel")
- error()
-end
 
 while true do
  term.clear()
  countMaterials()
  additionalLaddersNeeded = tArgs[2] - ladders
  additionalBlocksNeeded = tArgs[2] - blocks
- additionalTorchesNeeded = tArgs[2]/4 - torches
+ additionalTorchesNeeded = (tArgs[2] - tArgs[2]%4)/4 - torches
  if additionalLaddersNeeded + additionalBlocksNeeded + additionalTorchesNeeded > 0 then
   print("Materials needed: ")
   print("Ladders (slot 1 to 4): "..additionalLaddersNeeded)
