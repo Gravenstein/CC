@@ -1,5 +1,10 @@
--- Args -- 
+-- Args --
+
 tArgs = {...}
+if not tArgs then
+ print("Syntax: branchmine <length>")
+ error()
+end
 i = 0
 h = 2
 length = tArgs[1]
@@ -36,7 +41,7 @@ for l = 1,length do
   turtle.placeDown()
  end
 end
-if length%10 < 5 then
+if length%10 > 5 then
  turtle.placeDown()
 end
 turtle.turnRight()
