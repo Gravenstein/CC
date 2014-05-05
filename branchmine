@@ -1,7 +1,7 @@
 -- Args --
 
 tArgs = {...}
-if not tArgs then
+if not tArgs[1] then
  print("Syntax: branchmine <length>")
  error()
 end
@@ -9,8 +9,8 @@ i = 0
 h = 2
 length = tArgs[1]
 l = 1
-tn = length/10 + 1
-fn = length*2 + 1
+torchesNeeded = length/10 + 1
+fuelNeeded = length*2 + 1
 
 -- Functions --
 
@@ -22,12 +22,12 @@ end
 
 -- Check conditions --
 
-if turtle.getItemCount(1) < tn then
+if turtle.getItemCount(1) < torchesNeeded then
  print("Not enough torches")
  error()
 end
 
-if turtle.getFuelLevel() < fn then
+if turtle.getFuelLevel() < fuelNeeded then
  print("Not enough fuel")
  error()
 end
