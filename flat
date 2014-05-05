@@ -1,20 +1,25 @@
 -- Args --
 
 tArgs = {...}
+if not tArgs[1] then
+ print("Syntax: flat <length> <width> <safety (opt.)>")
+ error()
+end
 length = tonumber(tArgs[1])
 width = tonumber(tArgs[2])
-safety = tonumber(tArgs[3]) or 10
+safety = tonumber(tArgs[3]) or 0
 s = 0
 h = 1
-even = function(x)
- if x%2 == 0 then
+
+-- Functions --
+
+even = function(value)
+ if value%2 == 0 then
   return true
  else
   return false
  end
 end
-
--- Functions --
 
 dig = function(direction)
  if direction == "up" then
@@ -54,7 +59,7 @@ column = function()
 end
 
 row = function()
- for l = 1, length do
+ for l = 1,length do
   column()
   if l < tonumber(length) then
    dig()
@@ -65,7 +70,7 @@ end
 
 -- Main --
 
-for w = 1, width do
+for w = 1,width do
  row()
  if w < tonumber(width) then
   if even(w) then
@@ -81,19 +86,20 @@ for w = 1, width do
   end
  end
 end
-
 if not even(width) then
  turtle.turnRight()
  turtle.turnRight()
- for l = 1, length do
+ for l = 1,length do
   if l < tonumber(length) then
    turtle.forward()
   end
  end
 end
 turtle.turnRight()
-for w = 1, width do
+for w = 1,width do
  if w < tonumber(width) then
   turtle.forward()
- endend
+ end
+end
 turtle.turnRight()
+print("Done!)

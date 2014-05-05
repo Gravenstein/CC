@@ -24,11 +24,17 @@ end
 
 if turtle.getItemCount(1) < torchesNeeded then
  print("Not enough torches")
- error()
+ print("Additional torches needed: "..torchesNeeded - turtle.getItemCount(1))
+ error = true
 end
 
 if turtle.getFuelLevel() < fuelNeeded then
  print("Not enough fuel")
+ print("Additional fuel needed: "..fuelNeeded - turtle.getFuelLevel())
+ error = true
+end
+
+if error then
  error()
 end
 

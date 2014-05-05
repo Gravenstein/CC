@@ -1,6 +1,10 @@
 -- Args --
 
 tArgs = {...}
+if not tArgs[1] then
+ print("Syntax: floor <length> <width>")
+ error()
+end
 length = tArgs[1]
 width = tArgs[2]
 slotSelected = 1
@@ -24,21 +28,24 @@ end
 -- Check conditions --
 
 checkTotalSupplies = function()
- print("Number of materials needed: " .. suppliesNeeded)
  if supplies < suppliesNeeded then
   print("Not enough materials")
-  error()
+  print("Additional materials needed: "..suppliesNeeded - supplies)
+  error = true
  end
 end
 
 checkTotalFuel = function()
- print("Approx. fuel needed: " .. fuelNeeded)
  if turtle.getFuelLevel() < fuelNeeded then
   print("Not enough fuel")
-  error()
+  print("Additional fuel needed: "..fuelNeeded - turtle.getFuelLevel())
+  error = true
  end
 end
 
+if error then
+ error()
+end
 
 -- Functions --
 
