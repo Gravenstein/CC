@@ -1,5 +1,5 @@
 -- Mines a 2-high fully lit branchmine --
--- Place at desired head height --
+-- Place at desired floor level --
 -- Args --
 
 local tArgs = {...}
@@ -43,6 +43,7 @@ end
 -- Main --
 
 turtle.select(1)
+turtle.up()
 for l = 1,length do
  forward()
  if l%10 == 0 then
