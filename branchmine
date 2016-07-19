@@ -1,20 +1,22 @@
+-- Mines a 2-high fully lit branchmine --
+-- Place at desired head height --
 -- Args --
 
-tArgs = {...}
-if not tArgs[1] then
- print("Syntax: branchmine <length>")
+local tArgs = {...}
+if #tArgs == 0 then
+ print(" Syntax: branchmine <length>")
  error()
 end
-i = 0
-h = 2
-length = tArgs[1]
-l = 1
-torchesNeeded = length/10 + 1
-fuelNeeded = length*2 + 1
+
+local i = 0
+local h = 2
+local length = tArgs[1]
+local torchesNeeded = length/10 + 1
+local fuelNeeded = length*2 + 1
 
 -- Functions --
 
-mf = function()
+local forward = function()
  turtle.dig()
  turtle.forward()
  turtle.digDown()
@@ -22,19 +24,19 @@ end
 
 -- Check conditions --
 
+local isInvalid = false
+
 if turtle.getItemCount(1) < torchesNeeded then
- print("Not enough torches")
- print("Additional torches needed: "..torchesNeeded - turtle.getItemCount(1))
- error = true
+ print(" Additional torches needed: "..torchesNeeded - turtle.getItemCount(1))
+ isInvalid = true
 end
 
 if turtle.getFuelLevel() < fuelNeeded then
- print("Not enough fuel")
- print("Additional fuel needed: "..fuelNeeded - turtle.getFuelLevel())
- error = true
+ print(" Additional fuel needed: "..fuelNeeded - turtle.getFuelLevel())
+ isInvalid = true
 end
 
-if error then
+if isInvalid then
  error()
 end
 
@@ -42,7 +44,7 @@ end
 
 turtle.select(1)
 for l = 1,length do
- mf()
+ forward()
  if l%10 == 0 then
   turtle.placeDown()
  end
@@ -56,4 +58,4 @@ for l = 2,length do
  turtle.forward()
 end
 turtle.down()
-print("Branch complete")
+print(" Branch complete")
