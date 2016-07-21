@@ -142,9 +142,12 @@ function displayStatusToMonitor(mon, state, rodLvl, cellEnergy)
    end
 
    mon.setCursorPos(1,4)
-   mon.write("Rod Level: " .. rodLvl .. "%")
+   mon.write("Effect: " .. 100-rodLvl .. "%")
+   
+   mon.setCursorPor(1,5)
+   mon.write("Production: " .. reactor.getEnergyProducedLastTick() .. " RF/t"
 
-   mon.setCursorPos(1,5)
+   mon.setCursorPos(1,6)
    if width < 16 then
       mon.write("Cell: ") -- One block monitor (15x5 with scale 0.5)
    else
