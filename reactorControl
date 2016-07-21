@@ -90,7 +90,7 @@ end
 --     rodLvl     - Level of control rods in %
 --     cellEnergy - stored energy of internal cell (in RF)
 --
-function displayStatusToMonitor(mon, state, rodLvl, cellEnergy)
+function displayStatusToMonitor(mon, state, production, rodLvl, cellEnergy)
    mon.clear()
 
    -- First get the monitor size and try to scale, if the feature ist
@@ -141,12 +141,12 @@ function displayStatusToMonitor(mon, state, rodLvl, cellEnergy)
       writeColor(mon, colors.red, "OFF")
    end
 
-   mon.setCursorPos(1,4)
-   mon.write("Effect: " .. 100-rodLvl .. "%")
+   mon.setCursorPor(1,4)
+   mon.write("Production: " .. production .. " RF/t")
    
-   mon.setCursorPor(1,5)
-   mon.write("Production: " .. reactor.getEnergyProducedLastTick() .. " RF/t")
-
+   mon.setCursorPos(1,5)
+   mon.write("Effect (%): " .. 100-rodLvl .. "%")
+   
    mon.setCursorPos(1,6)
    if width < 16 then
       mon.write("Cell: ") -- One block monitor (15x5 with scale 0.5)
@@ -176,7 +176,7 @@ end
 --     cellEnergy - stored energy of internal energy cell in RF
 --
 function displayStatus(state, rodLvl, cellEnergy)
-   displayStatusToMonitor(term, state, rodLvl, cellEnergy) -- console
+   displayStatusToMonitor(term, state, production, rodLvl, cellEnergy) -- console
    term.setCursorPos(1,7)
    term.write("* Hold Crtl-T to terminate program")
    term.setCursorPos(1,8)
@@ -187,7 +187,7 @@ function displayStatus(state, rodLvl, cellEnergy)
       if peripheral.getType(name) == "monitor" then
          -- found monitor as peripheral
          displayStatusToMonitor(peripheral.wrap(name),
-                                state, rodLvl, cellEnergy)
+                                state, production, rodLvl, cellEnergy)
       end
    end
 end
@@ -246,7 +246,7 @@ while true do
 
    reactor.setAllControlRodLevels(rodLvl)
 
-   displayStatus(reactor.getActive(), rodLvl, cellEnergy)
+   displayStatus(reactor.getActive(), reactor.getEnergyProducedLastTick(), rodLvl, cellEnergy)
 
    os.sleep(5) -- Wait for 5s
 end
