@@ -1,2 +1,20 @@
-print("Success!")
-print("You failed when trying to become the one who defeated the Kraken!")
+local programs = {...}
+local i = 2
+local site = "https://raw.githubusercontent.com/Gravenstein/CC/master/"
+
+if #programs == 0 then
+  print(" Syntax: download <filename1> <filename2>")
+  error()
+end
+while programs[i] do
+  print("Downloading program: " .. programs[i])
+  local fileContent = http.get(site .. programs[i]).readAll() or false
+  if not fileContent then
+    print(" Error:: Could not find program " .. programs[i])
+    error()
+  end
+  local fileHandle = fs.open(programs[i],"w")
+  fileHandle.write(fileContent)
+  fileHandle.close()
+  i = i + 1
+end
