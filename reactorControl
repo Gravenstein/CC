@@ -175,7 +175,7 @@ end
 --     rodLvl     - Level of control rods in %
 --     cellEnergy - stored energy of internal energy cell in RF
 --
-function displayStatus(state, rodLvl, cellEnergy)
+function displayStatus(state, production, rodLvl, cellEnergy)
    displayStatusToMonitor(term, state, production, rodLvl, cellEnergy) -- console
    term.setCursorPos(1,7)
    term.write("* Hold Crtl-T to terminate program")
