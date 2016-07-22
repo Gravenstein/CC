@@ -46,7 +46,7 @@ function calcRodLevel(cellEnergy)
 
    -- Calculated maximum delta energy (not the real maximum), so that
    -- the high energy mark results into a control rod level of 90%
-   local deltaEnergy100 = deltaEnergy * 100 / 90
+   local deltaEnergy100 = deltaEnergy * 100 / 100
 
    -- Energy for calculation: value between 0 and 'deltaEnergy'
    local calcEnergy = cellEnergy - critEnergy
@@ -142,13 +142,14 @@ function displayStatusToMonitor(mon, state, production, rodLvl, cellEnergy)
    end
 
    mon.setCursorPos(1,4)
-   mon.write("Production: " .. production .. " RF/t")
+   mon.write("Effect: " .. production .. " RF/t")
    
    mon.setCursorPos(1,5)
    if state then
       mon.write("Effect (%): " .. 100-rodLvl .. "%")
    else
       mon.write("Effect (%): 0%")
+   end
    
    mon.setCursorPos(1,6)
    if width < 16 then
