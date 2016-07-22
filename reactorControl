@@ -148,7 +148,7 @@ function displayStatusToMonitor(mon, state, production, rodLvl, cellEnergy)
    if state then
       mon.write("Effect (%): " .. 100-rodLvl .. "%")
    else
-      mon.write("Effect (%): 0%"
+      mon.write("Effect (%): 0%")
    
    mon.setCursorPos(1,6)
    if width < 16 then
