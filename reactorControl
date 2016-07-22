@@ -141,11 +141,14 @@ function displayStatusToMonitor(mon, state, production, rodLvl, cellEnergy)
       writeColor(mon, colors.red, "OFF")
    end
 
-   mon.setCursorPor(1,4)
+   mon.setCursorPos(1,4)
    mon.write("Production: " .. production .. " RF/t")
    
    mon.setCursorPos(1,5)
-   mon.write("Effect (%): " .. 100-rodLvl .. "%")
+   if state then
+      mon.write("Effect (%): " .. 100-rodLvl .. "%")
+   else
+      mon.write("Effect (%): 0%"
    
    mon.setCursorPos(1,6)
    if width < 16 then
@@ -243,10 +246,11 @@ while true do
       --   energy level exeeds the high energy mark.
       rodLvl=calcRodLevel(cellEnergy)
    end
+   local production = math.floor(reactor.getEnergyProducedLastTick())
 
    reactor.setAllControlRodLevels(rodLvl)
 
-   displayStatus(reactor.getActive(), reactor.getEnergyProducedLastTick(), rodLvl, cellEnergy)
+   displayStatus(reactor.getActive(), production, rodLvl, cellEnergy)
 
    os.sleep(5) -- Wait for 5s
 end
