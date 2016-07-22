@@ -46,7 +46,7 @@ function calcRodLevel(cellEnergy)
 
    -- Calculated maximum delta energy (not the real maximum), so that
    -- the high energy mark results into a control rod level of 90%
-   local deltaEnergy100 = deltaEnergy * 100 / 100
+   local deltaEnergy100 = deltaEnergy * 100 / 90
 
    -- Energy for calculation: value between 0 and 'deltaEnergy'
    local calcEnergy = cellEnergy - critEnergy
