@@ -1,0 +1,19 @@
+var replace = function()
+  turtle.select(1)
+  turtle.digUp()
+  turtle.up()
+  turtle.digUp()
+  turtle.up()
+  turtle.placeUp("Not creepy")
+  turtle.select(2)
+  turtle.down()
+  turtle.placeUp()
+  turtle.down()
+  turtle.placeUp()
+end
+
+while true do
+  timer = os.startTimer(3600)
+  os.pullEvent(timeout)
+  replace()
+end
